@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+
+		<script
+			src="https://code.jquery.com/jquery-3.5.1.js"
+			integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+			crossorigin="anonymous"
+		></script>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+			rel="stylesheet"
+			href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+			integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+			crossorigin="anonymous"
+		/>
+		<script
+			src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+			integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
+			crossorigin="anonymous"
+		></script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+			integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+			crossorigin="anonymous"
+		></script>
+		<script
+			src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+			integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+			crossorigin="anonymous"
+		></script>
+		<link rel="stylesheet" href="css/style.css" />
+		<title>
+			NYSL
+		</title>
+
+		<!--iconos para ios-->
+		<link
+			rel="apple-touch-icon"
+			href="css/images/nysl_logo/iphone/touch-icon-ipad-retina.png"
+		/>
+		<link
+			rel="apple-touch-icon"
+			sizes="76x76"
+			href="css/images/nysl_logo/iphone/apple-touch-icon-iphone.png"
+		/>
+		<link
+			rel="apple-touch-icon"
+			sizes="120x120"
+			href="css/images/nysl_logo/iphone/touch-icon-iphone-retina.png"
+		/>
+		<link
+			rel="apple-touch-icon"
+			sizes="152x152"
+			href="css/images/nysl_logo/iphone/touch-icon-ipad.png"
+		/>
+
+		<meta name="apple-mobile-web-app-title" content="NYSL" />
+		<!--define el nombre de mi aplicacion, que por defecto seria el titulo de la pagina sino -->
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<!--define que se vea en pantalla compelta mi aplicacion -->
+
+		<!--iconos para android-->
+		<link
+			rel="shortcut icon"
+			sizes="196x196"
+			href="css/images/nysl_logo/android/ic_192x192.png"
+		/>
+		<meta name="mobile-web-app-capable" content="yes" />
+		<!--el modo de pantalla en modo web-app me permite que la pantalla se vea bien cuando no hay una barra de url o no hay vontones de volver en la pantalla... y otras cosas-->
+		<!--There is no official way to detect if your HTML is being executed in browser mode or app mode (full screen)-->
+	</head>
+
+	<body>
+		<div id="app">
+			<header>
+				<div class="row mx-0 d-flex justify-content-end" id="pageheader">
+					<div class="col align-items-end" v-show="input.user != null">
+						<h3 id="welcome">Welcome {{input.user}}</h3>
+					</div>
+					<div class="col-5 col-sm-4 col-md-3 d-flex align-items-end">
+						<h1 id="page">Home</h1>
+					</div>
+					<img
+						src="css/images/nysl_logo.png"
+						class="logo col-2 px-0 img-fluid rounded float-left"
+						alt="nysl_logo"
+					/>
+				</div>
+
+				<nav class="navbar navbar-expand-lg navbar-light bg-light">
+					<a
+						class="navbar-brand mx-0 d-flex align-items-center"
+						href="#"
+						id="titleNav"
+					>
+						<div>Home</div>
+						<svg
+							width="1em"
+							height="1em"
+							viewBox="0 0 16 16"
+							class="bi bi-house-door pl-1"
+							fill="currentColor"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path
+								fill-rule="evenodd"
+								d="M7.646 1.146a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 .146.354v7a.5.5 0 0 1-.5.5H9.5a.5.5 0 0 1-.5-.5v-4H7v4a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .146-.354l6-6zM2.5 7.707V14H6v-4a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v4h3.5V7.707L8 2.207l-5.5 5.5z"
+							/>
+							<path
+								fill-rule="evenodd"
+								d="M13 2.5V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"
+							/>
+						</svg>
+					</a>
+
+					<button
+						class="btn blue"
+						type="button"
+						id="google"
+						v-show="input.user == null"
+						v-on:click="googleAcces"
+					>
+						Google loggin
+						<i class="fas fa-sign-in ml-1">
+							<a class="navbar-brand" rel="home" href="#" title="google-logo">
+								<img
+									style="max-width: 40px; margin-top: -7px;"
+									src="css/images/google_PNG19635.png"
+								/>
+							</a>
+						</i>
+					</button>
+
+					<button
+						id="logOut"
+						class="btn green"
+						type="button"
+						v-show="input.user != null"
+						v-on:click="signOut"
+					>
+						Log out
+					</button>
+
+					<button
+						class="navbar-toggler"
+						type="button"
+						data-toggle="collapse"
+						data-target="#navbarNav"
+						aria-controls="navbarNav"
+						aria-expanded="false"
+						aria-label="Toggle navigation"
+					>
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarNav">
+						<ul class="navbar-nav">
+							<li class="nav-item d-flex align-items-center">
+								<a
+									class="nav-link"
+									href="#"
+									id="homeNav"
+									data-name="Home"
+									data-page="home"
+									>Home
+									<svg
+										width="1em"
+										height="1em"
+										viewBox="0 0 16 16"
+										class="bi bi-house-door"
+										fill="currentColor"
+										xmlns="http://www.w3.org/2000/svg"
+									>
+										<path
+											fill-rule="evenodd"
+											d="M7.646 1.146a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 .146.354v7a.5.5 0 0 1-.5.5H9.5a.5.5 0 0 1-.5-.5v-4H7v4a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .146-.354l6-6zM2.5 7.707V14H6v-4a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v4h3.5V7.707L8 2.207l-5.5 5.5z"
+										/>
+										<path
+											fill-rule="evenodd"
+											d="M13 2.5V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"
+										/>
+									</svg>
+								</a>
+							</li>
+							<li class="nav-item d-flex align-items-center">
+								<a
+									class="nav-link"
+									href="#"
+									id="letsShareNav"
+									data-name="Let's Share"
+									data-page="letsShare"
+									>Let's Share
+									<svg
+										width="1em"
+										height="1em"
+										viewBox="0 0 16 16"
+										class="bi bi-pencil-square"
+										fill="currentColor"
+										xmlns="http://www.w3.org/2000/svg"
+									>
+										<path
+											d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
+										/>
+										<path
+											fill-rule="evenodd"
+											d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
+										/>
+									</svg>
+								</a>
+							</li>
+							<li class="nav-item d-flex align-items-center">
+								<a
+									class="nav-link"
+									href="#"
+									id="gameInformationNav"
+									data-name="Game Info"
+									data-page="gameInformation"
+									>Game Information
+									<svg
+										width="1em"
+										height="1em"
+										viewBox="0 0 16 16"
+										class="bi bi-table"
+										fill="currentColor"
+										xmlns="http://www.w3.org/2000/svg"
+									>
+										<path
+											fill-rule="evenodd"
+											d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm15 2h-4v3h4V4zm0 4h-4v3h4V8zm0 4h-4v3h3a1 1 0 0 0 1-1v-2zm-5 3v-3H6v3h4zm-5 0v-3H1v2a1 1 0 0 0 1 1h3zm-4-4h4V8H1v3zm0-4h4V4H1v3zm5-3v3h4V4H6zm4 4H6v3h4V8z"
+										/>
+									</svg>
+								</a>
+							</li>
+							<li class="nav-item d-flex align-items-center">
+								<a
+									class="nav-link"
+									href="#"
+									id="aboutUsNav"
+									data-name="About Us"
+									data-page="aboutUs"
+									>About Us
+									<svg
+										width="1em"
+										height="1em"
+										viewBox="0 0 16 16"
+										class="bi bi-heart-fill pl-1"
+										fill="currentColor"
+										xmlns="http://www.w3.org/2000/svg"
+									>
+										<path
+											fill-rule="evenodd"
+											d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
+										/>
+									</svg>
+								</a>
+							</li>
+							<li class="nav-item d-flex align-items-center">
+								<a
+									class="nav-link mapsNav"
+									href="#"
+									id="mapsNav"
+									data-name="Maps"
+									data-page="maps"
+									>Maps
+									<svg
+										width="1em"
+										height="1em"
+										viewBox="0 0 16 16"
+										class="bi bi-geo-alt"
+										fill="currentColor"
+										xmlns="http://www.w3.org/2000/svg"
+									>
+										<path
+											fill-rule="evenodd"
+											d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"
+										/>
+									</svg>
+								</a>
+							</li>
+							<li class="nav-item d-flex align-items-center">
+								<a
+									class="nav-link"
+									href="#"
+									id="rulesNav"
+									data-name="Rules"
+									data-page="rules"
+									>Rules
+									<svg
+										width="1em"
+										height="1em"
+										viewBox="0 0 16 16"
+										class="bi bi-book"
+										fill="currentColor"
+										xmlns="http://www.w3.org/2000/svg"
+									>
+										<path
+											fill-rule="evenodd"
+											d="M3.214 1.072C4.813.752 6.916.71 8.354 2.146A.5.5 0 0 1 8.5 2.5v11a.5.5 0 0 1-.854.354c-.843-.844-2.115-1.059-3.47-.92-1.344.14-2.66.617-3.452 1.013A.5.5 0 0 1 0 13.5v-11a.5.5 0 0 1 .276-.447L.5 2.5l-.224-.447.002-.001.004-.002.013-.006a5.017 5.017 0 0 1 .22-.103 12.958 12.958 0 0 1 2.7-.869zM1 2.82v9.908c.846-.343 1.944-.672 3.074-.788 1.143-.118 2.387-.023 3.426.56V2.718c-1.063-.929-2.631-.956-4.09-.664A11.958 11.958 0 0 0 1 2.82z"
+										/>
+										<path
+											fill-rule="evenodd"
+											d="M12.786 1.072C11.188.752 9.084.71 7.646 2.146A.5.5 0 0 0 7.5 2.5v11a.5.5 0 0 0 .854.354c.843-.844 2.115-1.059 3.47-.92 1.344.14 2.66.617 3.452 1.013A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.276-.447L15.5 2.5l.224-.447-.002-.001-.004-.002-.013-.006-.047-.023a12.582 12.582 0 0 0-.799-.34 12.96 12.96 0 0 0-2.073-.609zM15 2.82v9.908c-.846-.343-1.944-.672-3.074-.788-1.143-.118-2.387-.023-3.426.56V2.718c1.063-.929 2.631-.956 4.09-.664A11.956 11.956 0 0 1 15 2.82z"
+										/>
+									</svg>
+								</a>
+							</li>
+							<li class="nav-item d-flex align-items-center">
+								<a
+									class="nav-link"
+									href="#"
+									id="contactNav"
+									data-name="Contact"
+									data-page="contact"
+									>Contact
+									<svg
+										width="1em"
+										height="1em"
+										viewBox="0 0 16 16"
+										class="bi bi-mailbox"
+										fill="currentColor"
+										xmlns="http://www.w3.org/2000/svg"
+									>
+										<path
+											fill-rule="evenodd"
+											d="M4 4a3 3 0 0 0-3 3v6h6V7a3 3 0 0 0-3-3zm0-1h8a4 4 0 0 1 4 4v6a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V7a4 4 0 0 1 4-4zm2.646 1A3.99 3.99 0 0 1 8 7v6h7V7a3 3 0 0 0-3-3H6.646z"
+										/>
+										<path
+											fill-rule="evenodd"
+											d="M11.793 8.5H9v-1h5a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.354-.146l-.853-.854z"
+										/>
+										<path
+											d="M5 7c0 .552-.448 0-1 0s-1 .552-1 0a1 1 0 0 1 2 0z"
+										/>
+									</svg>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</nav>
+			</header>
+
+			<section id="home">
+				<header>
+					<div class="row d-flex justify-content-center mx-0 px-0 bodycontent">
+						<div class="col mx-0 px-0">
+							<div id="upcoming">
+								<div
+									id="carouselExampleCaptions"
+									class="carousel slide pb-3"
+									data-ride="carousel"
+								>
+									<ol class="carousel-indicators">
+										<li
+											data-target="#carouselExampleCaptions"
+											data-slide-to="0"
+											class="active"
+										></li>
+										<li
+											data-target="#carouselExampleCaptions"
+											data-slide-to="1"
+										></li>
+										<li
+											data-target="#carouselExampleCaptions"
+											data-slide-to="2"
+										></li>
+									</ol>
+									<div class="carousel-inner">
+										<div class="carousel-item active">
+											<img
+												src="css/images/design1_image1.jpg"
+												class="d-block w-100"
+												alt="NYSL Fundraiser"
+											/>
+											<div class="carousel-caption d-none d-md-block">
+												<h5>August 4</h5>
+												<p>NYSL Fundraiser</p>
+											</div>
+										</div>
+										<div class="carousel-item">
+											<img
+												src="css/images/design2_image1.jpg"
+												class="d-block w-100"
+												alt="Season Kick-off"
+											/>
+											<div class="carousel-caption d-none d-md-block">
+												<h5>Season Kick-off: Meet the Teams.</h5>
+											</div>
+										</div>
+										<div class="carousel-item">
+											<img
+												src="css/images/3.jpg"
+												class="d-block w-100"
+												alt="First Game of the Season"
+											/>
+											<div class="carousel-caption d-none d-md-block">
+												<h5>September 1</h5>
+												<p>
+													First Game of the Season (Check Game Schedule for
+													details)
+												</p>
+											</div>
+										</div>
+									</div>
+									<a
+										class="carousel-control-prev"
+										href="#carouselExampleCaptions"
+										role="button"
+										data-slide="prev"
+									>
+										<span
+											class="carousel-control-prev-icon"
+											aria-hidden="true"
+										></span>
+										<span class="sr-only">Previous</span>
+									</a>
+									<a
+										class="carousel-control-next"
+										href="#carouselExampleCaptions"
+										role="button"
+										data-slide="next"
+									>
+										<span
+											class="carousel-control-next-icon"
+											aria-hidden="true"
+										></span>
+										<span class="sr-only">Next</span>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</header>
+
+				<div class="container">
+					<div class="row">
+						<div class="col-12 d-flex justify-content-center" id="button">
+							<a
+								type="button"
+								href="#"
+								id="gameInformationBtn"
+								class="btn yellow col-6 col-md-4 text-wrap"
+								data-name="Game Information"
+								data-page="gameInformation"
+							>
+								Game Schedule
+								<svg
+									width="1em"
+									height="1em"
+									viewBox="0 0 16 16"
+									class="bi bi-table"
+									fill="currentColor"
+									xmlns="http://www.w3.org/2000/svg"
+								>
+									<path
+										fill-rule="evenodd"
+										d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm15 2h-4v3h4V4zm0 4h-4v3h4V8zm0 4h-4v3h3a1 1 0 0 0 1-1v-2zm-5 3v-3H6v3h4zm-5 0v-3H1v2a1 1 0 0 0 1 1h3zm-4-4h4V8H1v3zm0-4h4V4H1v3zm5-3v3h4V4H6zm4 4H6v3h4V8z"
+									/>
+								</svg>
+							</a>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section id="gameInformation">
+				<div class="container">
+					<div class="row alert alert-success">
+						<h2 class="col-12"><em>Fall Schedule</em></h2>
+						<div class="col-12" role="alert">
+							*All games take place on Saturday
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-12 rounded">
+							<div class="table-responsive">
+								<table class="table table-striped overflow-auto" id="infotable">
+									<thead>
+										<tr>
+											<th scope="col">SEPTEMBER</th>
+											<th scope="col">Teams</th>
+											<th scope="col">Location</th>
+											<th scope="col">Times</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td rowspan="2">9/01</td>
+											<td>U1 and U4</td>
+											<td>AJ Katzenmaier</td>
+											<td>9:30 a.m.</td>
+										</tr>
+										<tr>
+											<td>U3 and U2</td>
+											<td>Greenbay</td>
+											<td>1:00 p.m.</td>
+										</tr>
+										<tr>
+											<td rowspan="2">9/08</td>
+											<td>U5 and U6</td>
+											<td>Howard A Yeager</td>
+											<td>9:30 a.m.</td>
+										</tr>
+										<tr>
+											<td>U6 and U1</td>
+											<td>Marjorie P Hart</td>
+											<td>1:00 p.m.</td>
+										</tr>
+
+										<tr>
+											<td rowspan="2">9/15</td>
+											<td>U2 and U4</td>
+											<td>North</td>
+											<td>9:30 a.m.</td>
+										</tr>
+										<tr>
+											<td>U3 and U5</td>
+											<td>AJ Katzenmaier</td>
+											<td>1:00 p.m.</td>
+										</tr>
+
+										<tr>
+											<td rowspan="2">9/22</td>
+											<td>U1 and U3</td>
+											<td>South</td>
+											<td>9:30 a.m.</td>
+										</tr>
+										<tr>
+											<td>U2 and U6</td>
+											<td>Howard A Yeager</td>
+											<td>1:00 p.m.</td>
+										</tr>
+
+										<tr>
+											<td>9/29</td>
+											<td>U4 and U5</td>
+											<td>Greenbay</td>
+											<td>9:30 a.m.</td>
+										</tr>
+									</tbody>
+									<thead>
+										<tr>
+											<th scope="col">OCTOBER</th>
+											<th scope="col">Teams</th>
+											<th scope="col">Location</th>
+											<th scope="col">Times</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td rowspan="2">10/06</td>
+											<td>U2 and U5</td>
+											<td>Marjorie P Hart</td>
+											<td>9:30 a.m.</td>
+										</tr>
+										<tr>
+											<td>U1 and U6</td>
+											<td>South</td>
+											<td>1:00 p.m.</td>
+										</tr>
+										<tr>
+											<td rowspan="2">10/08</td>
+											<td>U3 and U4</td>
+											<td>Howard A Yeager</td>
+											<td>9:30 a.m.</td>
+										</tr>
+										<tr>
+											<td>U5 and U1</td>
+											<td>Greenbay</td>
+											<td>1:00 p.m.</td>
+										</tr>
+
+										<tr>
+											<td rowspan="2">10/20</td>
+											<td>U6 and U3</td>
+											<td>North</td>
+											<td>9:30 a.m.</td>
+										</tr>
+										<tr>
+											<td>U2 and U4</td>
+											<td>Marjorie P Hart</td>
+											<td>1:00 p.m.</td>
+										</tr>
+
+										<tr>
+											<td rowspan="2">10/27</td>
+											<td>U3 and U1</td>
+											<td>AJ Katzenmaier</td>
+											<td>9:30 a.m.</td>
+										</tr>
+										<tr>
+											<td>U5 and U6</td>
+											<td>Howard A Yeager</td>
+											<td>1:00 p.m.</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+
+					<div class="row rounded" id="note">
+						<div class="col-12 rounded">
+							<p><br /><strong>Facility Type:</strong> Outdoor</p>
+							<p>
+								<strong>Additional Information:</strong> If deemed necessary by
+								NYSL, games may be shortened or cancelled due to extreme weather
+								conditions.
+							</p>
+							<p>
+								<strong>Please direct all questions to:</strong> Michael
+								Randall, League Coordinator
+							</p>
+							<address class="row">
+								<div class="col-12">
+									<p><strong>Phone:</strong> <span>(630) 690-8132</span></p>
+								</div>
+								<div class="col-11">
+									<a
+										type="button"
+										class="btn green btn-block"
+										href="mailto:michael.randall@chisoccer.org"
+										id="emailbtn"
+										>E-mail</a
+									>
+								</div>
+							</address>
+						</div>
+					</div>
+
+					<div class="row">
+						<a
+							type="button"
+							href="#"
+							class="btn yellow"
+							id="mapsBtn"
+							data-name="Maps"
+							data-page="maps"
+							>To Maps
+							<svg
+								width="1em"
+								height="1em"
+								viewBox="0 0 16 16"
+								class="bi bi-map"
+								fill="currentColor"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<path
+									fill-rule="evenodd"
+									d="M15.817.613A.5.5 0 0 1 16 1v13a.5.5 0 0 1-.402.49l-5 1a.502.502 0 0 1-.196 0L5.5 14.51l-4.902.98A.5.5 0 0 1 0 15V2a.5.5 0 0 1 .402-.49l5-1a.5.5 0 0 1 .196 0l4.902.98 4.902-.98a.5.5 0 0 1 .415.103zM10 2.41l-4-.8v11.98l4 .8V2.41zm1 11.98l4-.8V1.61l-4 .8v11.98zm-6-.8V1.61l-4 .8v11.98l4-.8z"
+								/>
+							</svg>
+						</a>
+					</div>
+				</div>
+			</section>
+
+			<section id="aboutUs">
+				<div class="container mt-1">
+					<div class="row justify-content-center bodycontent">
+						<div class="col-12 col-md-9 col-lg-4">
+							<div class="card" style="max-width: 500px;" id="card1">
+								<img
+									src="css/images/6-unnamed.jpg"
+									class="card-img-top"
+									alt="young athletes"
+								/>
+								<div class="card-body">
+									<h3 class="card-title">Mission</h3>
+									<p class="card-text">
+										To support young athletes living in Chicago's northside
+										neighborhoods, who have an interest in learning and playing
+										soccer, with opportunities to learn and practice skills
+										related to the game of soccer, specifically those skills
+										around team cooperation and good sportsmanship.
+									</p>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 col-md-9 col-lg-4">
+							<div class="card" style="max-width: 500px;" id="card2">
+								<img
+									src="css/images/5-images.jpg"
+									class="card-img-top"
+									alt="boy play futtball"
+								/>
+								<div class="card-body">
+									<h3 class="card-title">Vision</h3>
+									<p class="card-text">
+										The Northside Youth Soccer League aspires to develop strong,
+										well-rounded, and mindful athletes through the building of
+										character, self-discipline, and leadership.
+									</p>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 col-md-9 col-lg-4">
+							<div class="card" style="max-width: 500px;" id="card3">
+								<img
+									src="css/images/4-football-660x439.jpg"
+									class="card-img-top"
+									alt="boy sitting on ball"
+								/>
+								<div class="card-body">
+									<h3 class="card-title">General Information</h3>
+									<p class="card-text">
+										The Northside Youth Soccer League was established in 1996 to
+										provide athletes residing in Chicago's northside
+										neighborhoods an environment in which to learn and play
+										soccer. To be a member of NYSL, you must be between the ages
+										of 4 - 12 and reside in a Chicago northside neighborhood.
+										NYSL is run by a small full-time staff, and relies on the
+										generous volunteer time of parents and previous league
+										members.
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section id="maps">
+				<div class="container">
+					<div class="row d-flex justify-content-center">
+						<div class="card col-11 col-md-8 pb-2" id="card-map">
+							<iframe
+								id="map"
+								src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d95433.87826067713!2d-88.23932388852845!3d41.627458489571694!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xd2746b8a48f4d264!2sChicago%20Fire%20Juniors%20West!5e0!3m2!1ses-419!2sar!4v1594128752214!5m2!1ses-419!2sar"
+								class="card-img-top"
+								alt="map of club"
+							></iframe>
+							<div class="card-body">
+								<h5 class="card-title">Our club location</h5>
+								<p class="card-text" id="card-text">Please visit us!!</p>
+								<div class="col-11 d-flex justify-content-start">
+									<a
+										type="button"
+										href="#"
+										class="btn yellow my-3 pt-0 pb-2"
+										id="backBtn"
+										data-name="Game Information"
+										data-page="gameInformation"
+										>Back
+										<svg
+											width="1em"
+											height="1em"
+											viewBox="0 0 16 16"
+											class="bi bi-arrow-return-left"
+											fill="currentColor"
+											xmlns="http://www.w3.org/2000/svg"
+										>
+											<path
+												fill-rule="evenodd"
+												d="M5.854 5.646a.5.5 0 0 1 0 .708L3.207 9l2.647 2.646a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 0 1 .708 0z"
+											/>
+											<path
+												fill-rule="evenodd"
+												d="M13.5 2.5a.5.5 0 0 1 .5.5v4a2.5 2.5 0 0 1-2.5 2.5H3a.5.5 0 0 1 0-1h8.5A1.5 1.5 0 0 0 13 7V3a.5.5 0 0 1 .5-.5z"
+											/>
+										</svg>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section id="rules">
+				<header>
+					<div class="bodycontent">
+						<div id="titlecenter">
+							<div class="alert alert-success" role="alert">
+								A simple success alert—check it out!
+
+								<h1>Northside Youth Soccer League</h1>
+								<h2>Rules of Play &amp; Policies</h2>
+								<p>
+									FIFA rules shall govern NYSL play except as modified herein.
+								</p>
+							</div>
+						</div>
+					</div>
+				</header>
+
+				<div class="container">
+					<div class="row">
+						<div class="col-12 col-sm-6 col-md-4 mb-1">
+							<nav
+								id="navbar-example3"
+								class="navbar rounded navbar-light bg-light"
+							>
+								<a class="navbar-brand" href="#"><h3>Rules</h3></a>
+								<nav class="nav nav-pills flex-column">
+									<a class="nav-link" href="#item-1">Sportsmanship</a>
+									<a class="nav-link" href="#item-2">Fifa Field Regulations</a>
+									<nav class="nav nav-pills flex-column">
+										<a class="nav-link ml-3 my-1" href="#item-2-1"
+											>Dimensions.</a
+										>
+										<a class="nav-link ml-3 my-1" href="#item-2-2"
+											>Competition Fields.</a
+										>
+										<a class="nav-link ml-3 my-1" href="#item-2-3"
+											>Fields Used By Young Age Groups.</a
+										>
+										<a class="nav-link ml-3 my-1" href="#item-2-4"
+											>Team Bench Areas</a
+										>
+									</nav>
+									<a class="nav-link" href="#item-3">Equipment</a>
+									<a class="nav-link" href="#item-4">Number of Players</a>
+									<nav class="nav nav-pills flex-column">
+										<a class="nav-link ml-3 my-1" href="#item-4-1"
+											>Team Size.
+										</a>
+										<a class="nav-link ml-3 my-1" href="#item-4-2"
+											>Size of Age Group Teams.</a
+										>
+									</nav>
+									<a class="nav-link" href="#item-5">Substitutions</a>
+									<a class="nav-link" href="#item-6"
+										>Confiscated Player Passes</a
+									>
+									<a class="nav-link" href="#item-7">All-Play</a>
+									<a class="nav-link" href="#item-8">Player's Equipment</a>
+									<a class="nav-link" href="#item-9">Mixed Teams</a>
+									<nav class="nav nav-pills flex-column">
+										<a class="nav-link ml-3 my-1" href="#item-9-1"
+											>Girls Playing On Boys' Teams.
+										</a>
+										<a class="nav-link ml-3 my-1" href="#item-9-2"
+											>Types of Teams.</a
+										>
+									</nav>
+									<a class="nav-link" href="#item-10"
+										>Coaching from the Sidelines</a
+									>
+									<a class="nav-link" href="#item-11">Game Termination</a>
+									<a class="nav-link" href="#item-12"
+										>Conditions of Replay of Games</a
+									>
+									<a class="nav-link" href="#item-13"
+										>Referee responsibilities</a
+									>
+								</nav>
+							</nav>
+						</div>
+
+						<div
+							class="col-12 col-sm-6 col-md-8 alert alert-light px-0.5"
+							data-spy="scroll"
+							data-target="#navbar-example3"
+							data-offset="0"
+							id="rules-1"
+						>
+							<h2 id="item-1">Sportsmanship</h2>
+							<ul>
+								<li>
+									The common interest that members of the Association share is
+									to inspire youth to practice the ideals of sportsmanship and
+									fair play. Any player, coach, team, parent, spectator,
+									administrator or referee whose behavior detracts from this
+									purpose is subject to disciplinary action regardless of
+									technical soccer background, expertise, accomplishments or
+									standing.
+								</li>
+							</ul>
+
+							<h2 id="item-2">Fifa Field Regulations</h2>
+							<ol>
+								<li>
+									<h3 id="item-2-1">Dimensions.</h3>
+									FIFA Law 1 provides for flexible external field dimensions
+									within a given maximum and minimum width and length. These
+									dimensions should be adhered to for all fields used by teams
+									under 12 and older.
+								</li>
+
+								<li>
+									<h3 id="item-2-2">Competition Fields.</h3>
+									Fields used within the competition program must be a minimum
+									of 100 x 60 yards. Leagues, districts or associations
+									participating in the state competition program that are unable
+									to provide a field that meets these minimum requirements must
+									advise the State Competition Board which will assign its
+									Fields Committee to inspect the field and recommend to the
+									Board whether or not a waiver of the minimum dimensions should
+									be granted. Teams from leagues, districts or associations that
+									are unable to provide an acceptable field may be required to
+									play all their games away.
+								</li>
+
+								<li>
+									<h3 id="item-2-3">Fields Used By Young Age Groups.</h3>
+									<ol type="a">
+										<li>
+											U-6 play on a field approximately 20 X 40 yards with no
+											penalty areas. Fields for older age groups should be
+											progressively larger.
+										</li>
+										<li>
+											U-8 plays on a field 40-50 yards in length and 20-30 yards
+											width.
+										</li>
+										<li>
+											U-10 play on a field 70-80 yards in length and 40-50 yards
+											in width.
+										</li>
+										<li>
+											In addition, fields used by young age groups may have
+											their internal dimensions and size of goal similarly
+											modified.
+										</li>
+									</ol>
+								</li>
+
+								<li>
+									<h3 id="item-2-4">Team Bench Areas</h3>
+									<ol type="a">
+										<li>
+											Recreation &amp; District Programs
+											<ul>
+												<li>
+													The decision for team/spectator placement on the field
+													will be made by the governing body of that team. A
+													team's bench area shall consist of that area at least
+													one (1) yard away from the touchline and extending to
+													twenty yards (20) both ways from the halfway line. In
+													the event that field 2 conditions require team benches
+													to be on the same side of the field, a team's bench
+													area shall consist of that area two(2) yards away from
+													the touchline and extending twenty yards one (1) way
+													from the halfway line.
+												</li>
+												<li>
+													The home team has first choice as to where it wishes
+													to locate its bench area. Coaches and substitutes are
+													required to remain within their bench area during the
+													game. Parents and spectators should occupy the same
+													side of the field as the team they are supporting.
+												</li>
+											</ul>
+										</li>
+										<li>
+											State Competition League Only
+											<ul>
+												<li>
+													Except where it is determined by the referee to be
+													impractical, team bench areas shall be along the same
+													touchline. Each team bench area shall be located two
+													yards outside the touchline, beginning not closer than
+													five yards from midfield and extending not further
+													than twenty yards from midfield. The home team shall
+													have the right to choose the location of its bench
+													area. Coaches and substitutes must remain within their
+													team's bench area during the game.
+												</li>
+												<li>
+													Parents and spectators must occupy the sideline
+													opposite the team bench areas. Supporters of a team
+													must assemble on the side of the midfield facing the
+													team bench area of that team. There shall be a buffer
+													zone extending ten yards on each side of the midfield
+													that may not be occupied by parents or spectators.
+													Match officials shall be empowered to enforce these
+													provisions and may suspend or terminate games in the
+													event that any team, coach, parent, or spectator
+													declines to abide by requests from match officials to
+													comply with these standards.
+												</li>
+											</ul>
+										</li>
+									</ol>
+								</li>
+							</ol>
+
+							<h2 id="item-3">Equipment</h2>
+							<ul>
+								<li>
+									We will abide by and accept equipment standards as defined by
+									FIFA, USSF and USYSA.
+								</li>
+							</ul>
+
+							<h2 id="item-4">Number of Players</h2>
+							<ul>
+								<li>
+									<h3 id="item-4-1">Team Size.</h3>
+									Except as noted below, below, team rosters shall consist of
+									not less than eleven nor more than eighteen players. A team
+									must have at least seven (7) players present and able to play
+									before referees are permitted to start a sanctioned game. No
+									more than eleven (11) players per team may be on the field at
+									any one time during the game.
+								</li>
+								<li>
+									<h3 id="item-4-2">Size of Age Group Teams.</h3>
+									In order to give player's maximum opportunity to develop in
+									the game of soccer, U-6 through U-1O play modified rules and
+									size of roster as stated in United States Youth Soccer
+									Association (USYSA) rules. It is strongly recommended that U-6
+									and U-8 play 4 v 4. UYSA shall not sanction games involving
+									teams under 10 or younger unless such games are conducted with
+									not more than eight (8) players per side. (National rule 4036
+									section 2)
+								</li>
+								<li>
+									Recreational/Developmental players at other ages or where
+									numbers in the playing area are low are strongly encouraged to
+									play small-sided games on reduced field size.
+								</li>
+							</ul>
+
+							<h2 id="item-5">Substitutions</h2>
+							<ul>
+								<li>
+									Teams may make an unlimited number of substitutions at the
+									times indicated below. A player who has been replaced may
+									re-enter the game as a substitute at a later time.
+									<ol>
+										<li>Prior to a throw-in your favor.</li>
+										<li>Prior to a goalkick by either team.</li>
+										<li>After a goal by either team.</li>
+										<li>
+											After an injury, by either team, when the referee stops
+											play.
+										</li>
+										<li>At half time.</li>
+										<li>
+											When a player has been &quot;cautioned&quot;, only the
+											player receiving &quot;caution&quot; may be substituted.
+										</li>
+									</ol>
+								</li>
+							</ul>
+
+							<h2 id="item-6">Confiscated Player Passes</h2>
+							<ul>
+								<li>
+									Passes of any individual(s) ejected from any match shall be
+									retained after the match by the referee. The pass of any
+									individual who has received a third caution (yellow card)
+									during a playing year shall be confiscated by the referee at
+									the conclusion of the match in which the third caution was
+									received. That player will be suspended from playing in the
+									next game in which the offending participant would otherwise
+									be eligible to participate. This process will continue so that
+									for every third yellow card received during a playing year,
+									the player will be suspended from playing in the next game
+									(after the receipt of a third yellow card) for which the
+									offending participate would otherwise be eligible to
+									participate. The referee shall deliver all confiscated passes
+									to the UYSA State Office within forty-eight (48) hours of the
+									conclusion of the match.
+								</li>
+							</ul>
+
+							<h2 id="item-7">All-Play</h2>
+							<ul>
+								<li>
+									All-play means that every recreation player on every team
+									shall play at least fifty percent of each game. Coaches in the
+									competition program are encouraged to play their players 50%
+									of each game.
+									<ul style="list-style-type: circle;">
+										<li>
+											A Coach shall be permitted to not play a player 50% of
+											each game under special circumstances, e.g., unexcused
+											absences from practice and/or games, ungentlemanly conduct
+											at practice and/or games, and injuries.
+										</li>
+									</ul>
+								</li>
+							</ul>
+
+							<h2 id="item-8">Player's Equipment</h2>
+							<ul>
+								<li>
+									Where the uniform colors of both teams are so similar that the
+									referee orders a change, the designated home team must change
+									to colors distinct from those of the opponent.
+								</li>
+							</ul>
+
+							<h2 id="item-9">Mixed Teams</h2>
+							<ul>
+								<li>
+									<h3 id="item-9-1">Girls Playing On Boys' Teams.</h3>
+									Girls are eligible to play on boys'teams with parent/guardian
+									permission.
+								</li>
+								<li>
+									<h3 id="item-9-2">Types of Teams.</h3>
+									Teams with females only are Girls Teams. All others are Boys
+									Teams.
+								</li>
+							</ul>
+
+							<h2 id="item-10">Coaching from the Sidelines</h2>
+							<ul>
+								<li>
+									Coaching from the sidelines, i.e., giving direction to one's
+									own team on points of strategy and position, is permitted
+									provided that:
+									<ol>
+										<li>
+											No mechanical, electrical or other devices are used to
+											amplify the voice.
+										</li>
+										<li>
+											The tone of voice is informative and not a harangue.
+										</li>
+										<li>
+											The coaching takes place within the team's bench area.
+										</li>
+										<li>
+											No coach, substitute, player or spectator is to make
+											derogatory remarks or gestures to the referees, linesmen,
+											players, substitutes or spectators.
+										</li>
+										<li>
+											No coach, player, substitute or spectator is to use
+											profanity or incite, in any manner, disruptive behavior of
+											any kind.
+										</li>
+									</ol>
+								</li>
+							</ul>
+
+							<h2 id="item-11">Game Termination</h2>
+							<ul>
+								<li>
+									Any game terminated after 15 minutes into the second half by
+									the referee by reason of the elements, or by reason of grave
+									disorder on the part of the coaches, players or spectators of
+									a team that is losing at the point that the game is
+									terminated, shall stand as a completed game. If a team is
+									ahead and the game is called because of their actions they
+									will lose the game 1-0.
+								</li>
+							</ul>
+
+							<h2 id="item-12">Conditions of Replay of Games</h2>
+							<ul>
+								<li>
+									Any game which is required to be replayed as a result of any
+									protest orappeal, shall be subject to the following
+									conditions:
+									<ol>
+										<li>
+											The game shall be replayed on the same field, as was the
+											suspended or protested game, unless otherwise agreed by
+											the coaches.
+										</li>
+										<li>
+											Impartial referees shall be assigned to the new game.
+										</li>
+										<li>
+											The PROTEST AND APPEALS COMMITTEE shall have the power to
+											impose such additional conditions on the replay of the
+											game, as it deems appropriate under the circumstances.
+										</li>
+									</ol>
+								</li>
+							</ul>
+
+							<h2 id="item-13">Referee Responsibilities</h2>
+							<ul>
+								<li>
+									The referee shall verify the identity of the players and
+									coaches with his/her player pass. He shall collect the passes
+									of those players and coaches who are to participate in the
+									game. The referee must allow no player into the game for whom
+									he/she has no pass.
+								</li>
+								<li>
+									Upon completion of the game, the referee shall send his/her
+									report to the UYSA offices within four (4) days, holidays
+									excluded. If a coach or a player is ejected, the referee
+									report form is required within forty-eight (48) hours along
+									with the player/coach pass.
+								</li>
+								<li>
+									A referee report form must be filed for every game played.
+								</li>
+								<li>
+									Each team must determine whether or not referees are
+									registered prior to the start of each game. Upon request,
+									referees officiating at any game must willingly and without
+									bias, show documentation regarding their certification level
+									and registration standing with the USSF to coach, assistant
+									coach, or team captain of teams participating in that game.
+									Prior to the game a coach may decide to postpone the game if
+									the referees do not produce the requested documentation. The
+									game is to be replayed at a later date.
+								</li>
+								<li>
+									Referees not complying with this section will be referred to
+									the Disciplinary Committee.
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section id="contact">
+				<div class="container">
+					<div class="row d-flex justify-content-center">
+						<div class="col-12 col-sm-9 py-1">
+							<div class="jumbotron" id="jumbotron">
+								<h1 class="display-4">Please email us at:</h1>
+								<div class="bd-highlight mb-3">
+									<a
+										class="btn blue btn-lg d-flex justify-content-center"
+										href="mailto:nysl@chisoccer.org"
+										role="button"
+										>E-mail
+										<h2 class="d-flex align-items-center ml-3">
+											<svg
+												width="1em"
+												height="1em"
+												viewBox="0 0 16 16"
+												class="bi bi-envelope"
+												fill="currentColor"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<path
+													fill-rule="evenodd"
+													d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z"
+												/>
+											</svg>
+										</h2>
+									</a>
+								</div>
+								<p class="lead">
+									We will reply to your email as soon as we can.
+								</p>
+								<hr class="my-4" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section id="letsShare">
+				<div class="container">
+					<div
+						class="row d-flex justify-content-center"
+						id="add-post"
+						v-if="input.user !=null"
+					>
+						<form class="col-9 col-md-6 my-2" id="textCard">
+							<div class="row px-4 card-body">
+								<h2 class="title col-12">
+									New Post from {{input.user}}
+								</h2>
+								<div class="floating-label col-12">
+									<textarea
+										v-model="notes.newPostMessage"
+										placeholder="Post message..."
+									></textarea>
+								</div>
+								<p>what match is going to comment?</p>
+								<select
+									@change="onChange($event)"
+									id="matchSelect"
+									class="col-10 form-control form-control-sm ml-2"
+								>
+									<option value="all">Select a match </option>
+									<option value="U1 and U4"
+										>9/01 U1 and U4 AJ Katzenmaier 9:30 a.m.</option
+									>
+									<option value="U3 and U2"
+										>9/01 U3 and U2 Greenbay 1:00 p.m.</option
+									>
+									<option value="U5 and U6"
+										>9/08 U5 and U6 Howard A Yeager 9:30 a.m.</option
+									>
+									<option value="U6 and U1"
+										>9/08 U6 and U1 Marjorie P Hart 1:00 p.m.</option
+									>
+									<option value="U2 and U4"
+										>9/15 U2 and U4 North 9:30 a.m.</option
+									>
+									<option value="U3 and U5"
+										>9/15 U3 and U5 AJ Katzenmaier 1:00 p.m.</option
+									>
+									<option value="U1 and U3"
+										>9/22 U1 and U3 South 9:30 a.m.</option
+									>
+									<option value="U2 and U6"
+										>9/22 U2 and U6 Howard A Yeager 1:00 p.m.</option
+									>
+									<option value="U4 and U5"
+										>9/29 U4 and U5 Greenbay 9:30 a.m.</option
+									>
+									<option value="U2 and U5"
+										>10/06 U2 and U5 Marjorie P Hart 9:30 a.m.</option
+									>
+									<option value="U1 and U6"
+										>10/06 U1 and U6 South 1:00 p.m.</option
+									>
+									<option value="U3 and U4"
+										>10/08 U3 and U4 Howard A Yeager 9:30 a.m.</option
+									>
+									<option value="U5 and U1"
+										>10/08 U5 and U1 Greenbay 1:00 p.m.</option
+									>
+									<option value="U6 and U3"
+										>10/20 U6 and U3 North 9:30 a.m.</option
+									>
+									<option value="U2 and U4"
+										>10/20 U2 and U4 Marjorie P Hart 1:00 p.m.</option
+									>
+									<option value="U3 and U1"
+										>10/27 U3 and U1 AJ Katzenmaier 9:30 a.m.</option
+									>
+									<option value="U5 and U6"
+										>10/27 U5 and U6 Howard A Yeager 1:00 p.m.</option
+									>
+								</select>
+								<button
+									id="addPostBtn"
+									type="button"
+									data-name="Let'Share"
+									data-page="letsShare"
+									class="btn yellow"
+									:disabled="notes.newPostId == 'all' || notes.newPostMessage == ''"
+									v-on:click="addPost"
+								>
+									Add post!
+								</button>
+							</div>
+						</form>
+					</div>
+
+					<div class="alert alert-primary" v-show="input.user =='null'">
+						<h3 class="text-center">Please login to share a comment</h3>
+					</div>
+
+					<div class="col alert alert-warning justify-content-around">
+						<h3 class="text-center">Filter by match day</h3>
+
+						<select
+							@change="onChange2($event)"
+							id="matchSelect2"
+							class="col-10 form-control-sm ml-2"
+						>
+							<option value="all">Select a match </option>
+							<option value="U1 and U4"
+								>9/01 U1 and U4 AJ Katzenmaier 9:30 a.m.</option
+							>
+							<option value="U3 and U2"
+								>9/01 U3 and U2 Greenbay 1:00 p.m.</option
+							>
+							<option value="U5 and U6"
+								>9/08 U5 and U6 Howard A Yeager 9:30 a.m.</option
+							>
+							<option value="U6 and U1"
+								>9/08 U6 and U1 Marjorie P Hart 1:00 p.m.</option
+							>
+							<option value="U2 and U4">9/15 U2 and U4 North 9:30 a.m.</option>
+							<option value="U3 and U5"
+								>9/15 U3 and U5 AJ Katzenmaier 1:00 p.m.</option
+							>
+							<option value="U1 and U3">9/22 U1 and U3 South 9:30 a.m.</option>
+							<option value="U2 and U6"
+								>9/22 U2 and U6 Howard A Yeager 1:00 p.m.</option
+							>
+							<option value="U4 and U5"
+								>9/29 U4 and U5 Greenbay 9:30 a.m.</option
+							>
+							<option value="U2 and U5"
+								>10/06 U2 and U5 Marjorie P Hart 9:30 a.m.</option
+							>
+							<option value="U1 and U6">10/06 U1 and U6 South 1:00 p.m.</option>
+							<option value="U3 and U4"
+								>10/08 U3 and U4 Howard A Yeager 9:30 a.m.</option
+							>
+							<option value="U5 and U1"
+								>10/08 U5 and U1 Greenbay 1:00 p.m.</option
+							>
+							<option value="U6 and U3">10/20 U6 and U3 North 9:30 a.m.</option>
+							<option value="U2 and U4"
+								>10/20 U2 and U4 Marjorie P Hart 1:00 p.m.</option
+							>
+							<option value="U3 and U1"
+								>10/27 U3 and U1 AJ Katzenmaier 9:30 a.m.</option
+							>
+							<option value="U5 and U6"
+								>10/27 U5 and U6 Howard A Yeager 1:00 p.m.</option
+							>
+						</select>
+					</div>
+					<div
+						class="row d-flex justify-content-center mt-2"
+						v-if="notes.oldPost.lenth!= 0"
+					>
+						<div
+							id="add-post2"
+							class="col-11 col-md-5 col-xl-4 mx-2 text-white bg-warning mb-3"
+							v-for="post in notes.showPost"
+							v-if="post.id == notes.selectorNotes ||
+							notes.selectorNotes == 'all' "
+						>
+							<div v-bind:id="post.id" class="post-card">
+								<div class="card-header row d-flex justify-content-around">
+									<p>Posted by {{post.user}}</p>
+									<img
+										class="img-fluid rounded-circle"
+										v-if="post.url != 'null'"
+										:src="post.url"
+										alt="user photo"
+									/>
+
+									<svg
+										v-else
+										width="1em"
+										height="1em"
+										viewBox="0 0 16 16"
+										class="bi bi-person-circle"
+										fill="currentColor"
+										xmlns="http://www.w3.org/2000/svg"
+									>
+										<path
+											d="M13.468 12.37C12.758 11.226 11.195 10 8 10s-4.757 1.225-5.468 2.37A6.987 6.987 0 0 0 8 15a6.987 6.987 0 0 0 5.468-2.63z"
+										/>
+										<path
+											fill-rule="evenodd"
+											d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"
+										/>
+										<path
+											fill-rule="evenodd"
+											d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8z"
+										/>
+									</svg>
+								</div>
+								<div class="card-body">
+									<h5 class="card-id">
+										About {{post.id}} match
+									</h5>
+									<p class="card-text">
+										{{post.text}}
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+
+		<script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/7.16.0/firebase-auth.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/7.16.0/firebase-database.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+		<script src="js/principal.js"></script>
+	</body>
+</html>
